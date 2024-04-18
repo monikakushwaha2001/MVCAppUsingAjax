@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <title>Index</title>
+</head>
+<body onload="LoadData()">
+    <div style="background-color:lightgreen;color:darkblue;">
+        Date & Time: @DateTime.Now.ToString();
+    </div>
+    <div style="color:red;background-color:yellow;">
+        <marquee id="m1" behavior="alternate0"></marquee>
+    </div>
+    <div style="color:aqua;background-color:yellow;">
+        Date & Time: @DateTime.Now.ToString();
+    </div>
+    <script>
+        function LoadData() {
+            $.ajax({
+                url: "/Home/GetScore",
+                type: "get",
+                cache: false,
+                success: F1,
+                error: F2
+            });
+            windows.setTimeout("LoadData()", 1000);
+        }
+        function F1(responseString) {
+            $("#m1").html(responseString);
+        }
+        function F2() {
+            window.alert("Error in server");
+        }
+    </script>
+</body>
+</html>
